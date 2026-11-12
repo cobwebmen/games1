@@ -1,0 +1,31 @@
+name: new-games
+
+on:
+  schedule:
+    - cron: "0 0 * * *"      # 00:00 UTC = 03:00 Türkiye
+  workflow_dispatch:          # Actions sekmesinden elle çalıştırma düğmesi
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests google-play-scraper
+      - run: python new_games.py
+      - run: python send_mail.py
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: new-games
+          path: new_games_*.*
+          retention-days: 14
