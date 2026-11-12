@@ -22,7 +22,7 @@ except ImportError:
     from google_play_scraper import app as gp_app
 
 # ============================== AYARLAR ==============================
-DAYS_BACK        = 3        # son kaç günde çıkan oyunlar
+DAYS_BACK        = 1        # son kaç günde çıkan oyunlar
 RUN_IOS          = True
 RUN_ANDROID      = True
 
