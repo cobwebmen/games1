@@ -3,7 +3,7 @@ name: new-games
 on:
   schedule:
     - cron: "0 0 * * *"      # 00:00 UTC = 03:00 Türkiye
-  workflow_dispatch:          # Actions sekmesinden elle çalıştırma düğmesi
+  workflow_dispatch:
 
 jobs:
   run:
