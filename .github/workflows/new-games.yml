@@ -2,7 +2,7 @@ name: new-games
 
 on:
   schedule:
-    - cron: "0 0 * * *"      # 00:00 UTC = 03:00 Türkiye
+    - cron: "43 23 * * *"      # 00:00 UTC = 03:00 Türkiye
   workflow_dispatch:
 
 jobs:
