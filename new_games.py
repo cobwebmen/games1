@@ -134,8 +134,9 @@ def run_ios():
                 "released": rel.strftime("%Y-%m-%d"),
                 "status": "pre-order" if rel > NOW else "live",
                 "genres": ", ".join(g for g in a.get("genres", []) if g != "Games"),
-                            
-                
+                "ratings": a.get("userRatingCount", 0),
+                "installs": "",
+                "price": a.get("formattedPrice", ""),
                 "app_id": a.get("bundleId", ""),
                 "store_url": (a.get("trackViewUrl") or "").split("?")[0],
                 "developer_url": (a.get("artistViewUrl") or "").split("?")[0],
