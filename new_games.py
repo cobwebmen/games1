@@ -22,7 +22,7 @@ except ImportError:
     from google_play_scraper import app as gp_app
 
 # ============================== AYARLAR ==============================
-DAYS_BACK        = 2        # son kaç günde çıkan oyunlar
+DAYS_BACK        = 3        # son kaç günde çıkan oyunlar
 RUN_IOS          = True
 RUN_ANDROID      = True
 
@@ -134,9 +134,9 @@ def run_ios():
                 "released": rel.strftime("%Y-%m-%d"),
                 "status": "pre-order" if rel > NOW else "live",
                 "genres": ", ".join(g for g in a.get("genres", []) if g != "Games"),
+                "price": a.get("formattedPrice", ""),
                 "ratings": a.get("userRatingCount", 0),
                 "installs": "",
-                "price": a.get("formattedPrice", ""),
                 "app_id": a.get("bundleId", ""),
                 "store_url": (a.get("trackViewUrl") or "").split("?")[0],
                 "developer_url": (a.get("artistViewUrl") or "").split("?")[0],
@@ -274,8 +274,8 @@ def write_html(rows, path):
             f'<td>{r["released"]}' + (' <small>(pre-order)</small>' if r["status"] != "live" else "") + "</td>"
             f'<td>{e(r["genres"])}</td><td>{e(str(r["price"]))}</td>'
             f'<td data-v="{r["ratings"]}">{r["ratings"]}</td><td>{e(str(r["installs"]))}</td><td>{links}</td></tr>')
-    page = f"""<!doctype html><html lang="tr"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Yeni oyunlar {NOW:%Y-%m-%d}</title>
+    page = f"""<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>New games {NOW:%Y-%m-%d}</title>
 <style>
 body{{font:14px system-ui,sans-serif;margin:16px;background:#f6f7f9;color:#1c1e21}}
 h1{{font-size:20px;margin:0 0 4px}} .sub{{color:#667;margin-bottom:12px}}
@@ -288,11 +288,11 @@ img{{width:40px;height:40px;border-radius:9px;display:block;background:#eee}} sm
 .b{{padding:2px 7px;border-radius:10px;font-size:12px;color:#fff}} .ios{{background:#2b6cf0}} .android{{background:#1c9a55}}
 a{{color:#2457c5;text-decoration:none}} a:hover{{text-decoration:underline}}
 </style>
-<h1>Yeni çıkan oyunlar</h1>
-<div class="sub">{NOW:%Y-%m-%d %H:%M} UTC · son {DAYS_BACK} gün · <span id="cnt">{len(rows)}</span> oyun</div>
-<div class="bar"><input id="q" placeholder="Oyun, geliştirici, tür ara...">
-<select id="pf"><option value="">Tüm platformlar</option><option>iOS</option><option>Android</option></select></div>
-<div class="wrap"><table id="t"><thead><tr><th></th><th>Platform</th><th>Oyun</th><th>Geliştirici</th><th>Çıkış</th><th>Tür</th><th>Fiyat</th><th>Oy</th><th>İndirme</th><th>Link</th></tr></thead>
+<h1>New game releases</h1>
+<div class="sub">{NOW:%Y-%m-%d %H:%M} UTC · last {DAYS_BACK} days · <span id="cnt">{len(rows)}</span> games</div>
+<div class="bar"><input id="q" placeholder="Search game, developer, genre...">
+<select id="pf"><option value="">All platforms</option><option>iOS</option><option>Android</option></select></div>
+<div class="wrap"><table id="t"><thead><tr><th></th><th>Platform</th><th>Game</th><th>Developer</th><th>Released</th><th>Genre</th><th>Price</th><th>Ratings</th><th>Installs</th><th>Links</th></tr></thead>
 <tbody>{''.join(trs)}</tbody></table></div>
 <script>
 const tb=document.querySelector('#t tbody'),q=document.getElementById('q'),pf=document.getElementById('pf');
