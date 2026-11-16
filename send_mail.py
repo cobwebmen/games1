@@ -8,7 +8,7 @@ from email.utils import make_msgid
 
 # ============================== AYARLAR ==============================
 BRAND        = "New Games"         # logonun yanında / logo yoksa başlıkta görünen isim
-LINKEDIN_URL = ""                  # ör. "https://www.linkedin.com/in/kullanici-adin"  (boşsa gösterilmez)
+LINKEDIN_URL = "https://www.linkedin.com/in/m-ert/" # ör. "https://www.linkedin.com/in/kullanici-adin"  (boşsa gösterilmez)
 LOGO_FILE    = "logo.png"          # depoya bu isimle yüklenen logo (yoksa sadece isim yazılır)
 TOP_N        = 10                  # mailin içinde listelenecek oyun sayısı (0 = liste yok)
 # =====================================================================
@@ -55,7 +55,7 @@ top_block = (
     '</td></tr>') if items else ""
 
 linkedin = (
-    f'<a href="{e(https://www.linkedin.com/in/m-ert/)}" style="display:inline-block;background:#1df08b;color:#050505;'
+    f'<a href="{e(LINKEDIN_URL)}" style="display:inline-block;background:#1df08b;color:#050505;'
     'text-decoration:none;font-size:13px;font-weight:600;padding:7px 16px;border-radius:5px">LinkedIn</a>'
 ) if LINKEDIN_URL else ""
 
